@@ -1,17 +1,17 @@
-import PostList from "./PostList.js";
+import "./PostList.js";
+import "./PostEdit.js";
+import "./Menu.js";
+import "./Home.js"
+import { Router } from "./lib/vaadin-router.js";
 
-console.log('start js ok...');
+const outlet = document.querySelector('main');
+const router = new Router(outlet);
 
-/*
-fetch('http://localhost:5000/api/posts')
-.then(resp => {
-    if(resp.status != 200){
-        console.log("stato errato ", resp.status);
-        throw new Error("fetch bad status");
-    }
-    return resp.json()
-})
-.then(data => {
-    console.log(data);
-})
-*/
+router.setRoutes([
+    {path: '/',     component: 'blog-home'},
+    {path: '/home',     component: 'blog-home'},
+    {path: '/posts',     component: 'post-list'},
+    {path: '/posts/:post',     component: 'post-edit'},
+  ]);
+
+export {router};

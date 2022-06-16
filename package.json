@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@vaadin/router": "^1.7.4",
+    "bulma": "^0.9.4",
+    "bulma-list": "^1.2.0",
     "lit-html": "^2.2.6"
   },
   "devDependencies": {
