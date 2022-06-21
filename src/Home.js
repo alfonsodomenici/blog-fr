@@ -11,7 +11,7 @@ export default class Home extends HTMLElement{
     connectedCallback(){
         render(this.renderView(),this.getRoot());
     }
-
+    
     renderView(){
         return html`
             <section class="hero">
