@@ -1,6 +1,6 @@
 import { html, render } from "./lib/lit-html.js";
 import { Router } from "./lib/vaadin-router.js";
-import { allPosts } from "./postStore.js";
+import { allPosts,deletePost } from "./postStore.js";
 
 export default class PostList extends HTMLElement {
 
@@ -14,19 +14,26 @@ export default class PostList extends HTMLElement {
     }
 
     connectedCallback() {
-        allPosts().then(data => {
-            this.data = data;
-            render(this.renderView(), this.getRoot());
-        })
-
+        this.loadAndRenderPosts();
     }
 
     disconnectedCallback() {
     }
 
+    loadAndRenderPosts(){
+        allPosts().then(data => {
+            this.data = data;
+            render(this.renderView(), this.getRoot());
+        })
+    }
     /*
     -------------------- eventi -------------------
     */
+
+    onCreate(e) {
+        e.preventDefault();
+        Router.go(`/createPost`)
+    }
 
     onEdit(e, id) {
         e.preventDefault();
@@ -36,6 +43,10 @@ export default class PostList extends HTMLElement {
 
     onDelete(e, id) {
         e.preventDefault(); 
+        deletePost(id)
+        .then(resp => {
+            this.loadAndRenderPosts();
+        });
         
     }
 
@@ -51,6 +62,8 @@ export default class PostList extends HTMLElement {
             <div class="list">
                 ${this.data.map(post => this.renderPost(post))}
             </div>
+
+            <button @click = ${e => this.onCreate(e)} class="button is-primary">Nuovo</button>
         `;
     }
 

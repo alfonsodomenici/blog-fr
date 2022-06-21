@@ -11,6 +11,7 @@ router.setRoutes([
     {path: '/',     component: 'blog-home'},
     {path: '/home',     component: 'blog-home'},
     {path: '/posts',     component: 'post-list'},
+    {path: '/createPost',     component: 'post-edit'},
     {path: '/posts/:post',     component: 'post-edit'},
   ]);
 

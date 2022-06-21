@@ -1,7 +1,7 @@
 import { html, render } from "./lib/lit-html.js";
 import { Router } from "./lib/vaadin-router.js";
 import { router } from "./index.js";
-import { findPost, updatePost } from "./postStore.js";
+import { findPost, updatePost, createPost } from "./postStore.js";
 
 export default class PostEdit extends HTMLElement {
 
@@ -15,26 +15,44 @@ export default class PostEdit extends HTMLElement {
 
     connectedCallback() {
         const { location } = router;
-        this.id = location.params.post;
+        this.id = location.params.post ;
+        if (this.id == "undefined") {
+            console.log("create..")
+            this.data = {
+                category:'',
+                title:'',
+                content:''
+            }
+            render(this.renderView(), this.getRoot());
+        } else {
+            findPost(this.id)
+                .then(data => {
+                    this.data = data;
+                    render(this.renderView(), this.getRoot());
+                })
+        }
 
-        findPost(this.id)
-            .then(data => {
-                this.data = data;
-                render(this.renderView(), this.getRoot());
-            })
     }
 
-    onInputChange(e){
-        const {name,value} = e.target;
+    onInputChange(e) {
+        const { name, value } = e.target;
         this.data[name] = value;
     }
 
     onSave(e) {
         e.preventDefault();
-        updatePost(this.id,this.data)
-            .then(_ => {
-                Router.go(`/posts/`); 
-            })
+        if (this.id === "undefined") {
+            createPost(this.data)
+                .then(_ => {
+                    Router.go(`/posts/`);
+                })
+        } else {
+            updatePost(this.id, this.data)
+                .then(_ => {
+                    Router.go(`/posts/`);
+                })
+        }
+
     }
 
     onCancel(e) {
