@@ -50,6 +50,15 @@ export default class PostList extends HTMLElement {
         
     }
 
+    onTestEvent(e){
+       const evt = new CustomEvent('blog-event',{
+            detail:{
+                category: 'prova'
+            },
+            bubbles: true
+        })
+        document.dispatchEvent(evt);
+    }
     /*
     --------------------render ---------------------
     */
@@ -64,6 +73,7 @@ export default class PostList extends HTMLElement {
             </div>
 
             <button @click = ${e => this.onCreate(e)} class="button is-primary">Nuovo</button>
+            <button @click = ${e => this.onTestEvent(e)} class="button is-primary">CustomEvent</button>
         `;
     }
 

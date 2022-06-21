@@ -11,6 +11,8 @@ export default class Menu extends HTMLElement{
     }
 
     connectedCallback(){
+        document.addEventListener('blog-event', e => this.onBlogEvent(e));
+
         render(this.renderView(),this.getRoot());
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -35,6 +37,11 @@ export default class Menu extends HTMLElement{
           });
     }
 
+    onBlogEvent(e){
+        const {detail} = e;
+        console.log(detail);
+    }
+    
     renderView(){
         return html`
             <nav class="navbar" role="navigation" aria-label="main navigation">
