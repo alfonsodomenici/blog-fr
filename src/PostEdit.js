@@ -41,6 +41,11 @@ export default class PostEdit extends HTMLElement {
 
     onSave(e) {
         e.preventDefault();
+        const {form} = e.target;
+        if(!form.checkValidity()){
+            form.reportValidity();
+            return;
+        }
         if (this.id === "undefined") {
             createPost(this.data)
                 .then(_ => {
@@ -66,21 +71,21 @@ export default class PostEdit extends HTMLElement {
                 <div class="field">
                     <label class="label">Category</label>
                     <div class="control">
-                        <input class="input" type="text" @change=${e => this.onInputChange(e)} name="category" .value=${this.data.category} placeholder="categoria...">
+                        <input required class="input" type="text" @change=${e => this.onInputChange(e)} name="category" .value=${this.data.category} placeholder="categoria...">
                     </div>
                 </div>
          
                 <div class="field">
                     <label class="label">Title</label>
                     <div class="control">
-                        <input class="input" type="text" name="title" @change=${e => this.onInputChange(e)} .value=${this.data.title} placeholder="titolo...">
+                        <input required class="input" type="text" name="title" @change=${e => this.onInputChange(e)} .value=${this.data.title} placeholder="titolo...">
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Testo</label>
                     <div class="control">
-                        <textarea class="textarea" name="content" @change=${e => this.onInputChange(e)} .value=${this.data.content} placeholder="testo..."></textarea>
+                        <textarea required class="textarea" name="content" @change=${e => this.onInputChange(e)} .value=${this.data.content} placeholder="testo..."></textarea>
                     </div>
                 </div>
          

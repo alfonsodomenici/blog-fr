@@ -51,6 +51,7 @@ export default class PostList extends HTMLElement {
     }
 
     onTestEvent(e){
+        e.preventDefault(); 
        const evt = new CustomEvent('blog-event',{
             detail:{
                 category: 'prova'
@@ -59,6 +60,7 @@ export default class PostList extends HTMLElement {
         })
         document.dispatchEvent(evt);
     }
+
     /*
     --------------------render ---------------------
     */
